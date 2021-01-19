@@ -9,7 +9,7 @@ const state = user
 const actions = {
     login({ dispatch, commit }, { username, password }) {
         commit('loginRequest', { username });
-    
+
         userService.login(username, password)
             .then(
                 user => {
@@ -28,7 +28,7 @@ const actions = {
     },
     register({ dispatch, commit }, user) {
         commit('registerRequest', user);
-    
+
         userService.register(user)
             .then(
                 user => {
@@ -37,6 +37,24 @@ const actions = {
                     setTimeout(() => {
                         // display success message after route change completes
                         dispatch('alert/success', 'Registration successful', { root: true });
+                    })
+                },
+                error => {
+                    commit('registerFailure', error);
+                    dispatch('alert/error', error, { root: true });
+                }
+            );
+    },
+    changePassword({ dispatch, commit }, user) {
+        commit('registerRequest', user);
+
+        userService.changePassword(user)
+            .then(
+                user => {
+                    commit('registerSuccess', user);
+                    setTimeout(() => {
+                        // display success message after route change completes
+                        dispatch('alert/success', 'Password has been set. Please login!', { root: true });
                     })
                 },
                 error => {
@@ -72,7 +90,10 @@ const mutations = {
     },
     registerFailure(state, error) {
         state.status = {};
-    }
+    },
+    forgotRequest(state, user) {
+        state.status = { changePassword: true };
+    },
 };
 
 export const account = {

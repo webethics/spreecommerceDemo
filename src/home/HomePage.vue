@@ -15,6 +15,7 @@
         </ul>
         <p>
             <router-link to="/login">Logout</router-link>
+            <router-link to="/change/password" class="ml-4">Change Password</router-link>
         </p>
     </div>
 </template>

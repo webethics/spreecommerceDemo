@@ -1,5 +1,6 @@
 import config from 'config';
 import { authHeader } from '../_helpers';
+const axios = require('axios');
 
 export const userService = {
     login,
@@ -8,6 +9,7 @@ export const userService = {
     getAll,
     getById,
     update,
+    changePassword,
     delete: _delete
 };
 
@@ -15,14 +17,14 @@ function login(username, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, grant_type: 'password' })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${config.apiUrl}/spree_oauth/token`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
-            if (user.token) {
+            if (user.access_token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
             }
@@ -43,8 +45,19 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/v2/storefront/account`, requestOptions).then(handleResponse);
 }
+
+function changePassword(user) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: authHeader(),
+        body: JSON.stringify(user)
+    };
+
+    return fetch(`${config.apiUrl}/api/v2/storefront/account`, requestOptions).then(handleResponse);
+}
+
 
 function getAll() {
     const requestOptions = {
