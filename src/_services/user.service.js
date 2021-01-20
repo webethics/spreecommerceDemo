@@ -52,7 +52,7 @@ function register(user) {
 function changePassword(user) {
     const requestOptions = {
         method: 'PATCH',
-        headers: authHeader(),
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 

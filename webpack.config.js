@@ -1,9 +1,12 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const path =require('path');
 module.exports = {
     mode: 'development',
     resolve: {
-        extensions: ['.js', '.vue']
+        extensions: ['.js', '.vue'],
+        alias: {
+            '@': path.resolve('src/'),
+          }
     },
     module: {
         rules: [
@@ -29,7 +32,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'https://demo.spreecommerce.org'
+            apiUrl: 'http://206.81.17.223'
         })
     }
 }

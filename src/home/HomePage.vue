@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div class="box-holder dot_bg">
         <!--h1>Hi {{account.user.firstName}}!</h1-->
-        <p>You're logged in !!</p>
+        <h5 class="mb-4 text-primary">You're logged in !!</h5>
 
         <p><b>Email :</b> {{user.data.attributes.email}} </p>
        
         <p>
             <router-link to="/login">Logout</router-link>
-            <router-link to="/change/password" class="ml-4">Change Password</router-link>
+            <router-link to="/change-password" class="ml-4">Update Password</router-link>
         </p>
     </div>
 </template>
