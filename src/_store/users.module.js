@@ -1,7 +1,8 @@
 import { userService } from '../_services';
 
 const state = {
-    all: {}
+    all: {},
+    user:{}
 };
 
 const actions = {
@@ -14,6 +15,17 @@ const actions = {
                 error => commit('getAllFailure', error)
             );
     },
+
+    getUserDetail({ commit }) {
+        commit('getUserDetailRequest');
+
+        userService.getUserDetail()
+            .then(
+                user => commit('getgetUserDetailSuccess', user),
+                error => commit('getUserDetailFailure', error)
+            );
+    },
+
 
     delete({ commit }, id) {
         commit('deleteRequest', id);
@@ -36,6 +48,22 @@ const mutations = {
     getAllFailure(state, error) {
         state.all = { error };
     },
+
+    getUserDetailRequest(state) {
+        state.user = { loading: true };
+    },
+    getgetUserDetailSuccess(state, user) {
+
+        console.log(user);
+        state.user = user;
+    },
+    getUserDetailFailure(state, error) {
+        state.user = { error };
+    },
+
+
+
+
     deleteRequest(state, id) {
         // add 'deleting:true' property to user being deleted
         state.all.items = state.all.items.map(user =>

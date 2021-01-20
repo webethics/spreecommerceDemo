@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h2>Change Password</h2>
+        <h2>Change Password   <p>  </p></h2>
         <form @submit.prevent="handleSubmit">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" v-model="user.email" v-validate="'required'" name="email" class="form-control" :class="{ 'is-invalid': submitted && errors.has('email') }" />
+                <input type="email" v-model="user.email"  v-validate="'required'" name="email" class="form-control" :class="{ 'is-invalid': submitted && errors.has('email') }" />
                 <div v-if="submitted && errors.has('email')" class="invalid-feedback">{{ errors.first('email') }}</div>
             </div>
             <div class="form-group">
@@ -41,14 +41,26 @@ export default {
         }
     },
     computed: {
-        ...mapState('account', ['status'])
+        ...mapState('account', ['status']),
+
+         ...mapState({
+            userinfo: state => state.users.user
+        })
+    },
+     created () {
+        this.getUserDetail();
     },
     methods: {
         ...mapActions('account', ['changePassword']),
+         ...mapActions('users', {
+            getUserDetail: 'getUserDetail',
+           // deleteUser: 'delete'
+        }),
         handleSubmit(e) {
             this.submitted = true;
             this.$validator.validate().then(valid => {
                 if (valid) {
+                    console.log(this.user);
                     this.changePassword({user: this.user});
                 }
             });

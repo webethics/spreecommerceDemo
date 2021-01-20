@@ -41,6 +41,8 @@ const actions = {
                 },
                 error => {
                     commit('registerFailure', error);
+                   
+                    
                     dispatch('alert/error', error, { root: true });
                 }
             );
@@ -54,7 +56,7 @@ const actions = {
                     commit('registerSuccess', user);
                     setTimeout(() => {
                         // display success message after route change completes
-                        dispatch('alert/success', 'Password has been set. Please login!', { root: true });
+                        dispatch('alert/success', 'Password has been changed.', { root: true });
                     })
                 },
                 error => {

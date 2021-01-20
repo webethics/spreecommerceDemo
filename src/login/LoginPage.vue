@@ -5,7 +5,7 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="text" v-model="username" name="email" class="form-control" :class="{ 'is-invalid': submitted && !username }" />
-                <div v-show="submitted && !username" class="invalid-feedback">email is required</div>
+                <div v-show="submitted && !username" class="invalid-feedback">Please enter email is required</div>
             </div>
             <div class="form-group">
                 <label htmlFor="password">Password</label>
